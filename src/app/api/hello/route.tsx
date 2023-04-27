@@ -1,9 +1,11 @@
 import { NextRequest,NextResponse } from "next/server";
+import path from 'path';
 import * as XLSX from "xlsx";
 
 export async function POST(req: NextRequest, res: NextResponse) {
+  const filePath = path.join(process.cwd(), '/src/app/api/hello');
   const body = await req.json();
-  const filename = 'public/UI_UXDeveloperWorkSampleData.xlsx';
+  const filename = filePath + '/UI_UXDeveloperWorkSampleData.xlsx';
   // Getting data from the excel file
   const dt = XLSX.readFile(filename, {});
   const first_worksheet = dt.Sheets[dt.SheetNames[0]];
@@ -29,7 +31,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
 }
 
 export async function GET(req: NextRequest, res: NextResponse) {
-  const filename = 'public/UI_UXDeveloperWorkSampleData.xlsx';
+  const filePath = path.join(process.cwd(), '/src/app/api/hello');
+  const filename = filePath + '/UI_UXDeveloperWorkSampleData.xlsx';
   // Getting data from the excel file
   const dt = XLSX.readFile(filename, {});
   const first_worksheet = dt.Sheets[dt.SheetNames[0]];
