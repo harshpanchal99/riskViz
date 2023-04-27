@@ -12,7 +12,7 @@ export default function GraphComponent() {
 
   const [selectedAsset, setSelectedAsset] = useState(null); 
   const [selectedBusiness, setSelectedBusiness] = useState(null);
-  const [selectedLocation, setSelectedLocation] = useState(null); 
+  const [selectedLocation, setSelectedLocation] = useState(''); 
 
   const [chartOptions, setChartOptions] = useState({}); 
   const [tableData, setTableData] = useState([]);
@@ -44,13 +44,13 @@ export default function GraphComponent() {
    * To populate the asset, business category, locations filter dropdown values dynamically depending on the data provided
    */ 
   useEffect(() => {
-    const assetsArray = tableData.map((obj) => {
+    const assetsArray = tableData.map((obj:any) => {
       return obj.assetName;
     })
-    const businessCatArray = tableData.map((obj) => {
+    const businessCatArray = tableData.map((obj:any) => {
       return obj.businessCat;
     })
-    const locations = tableData.reduce((acc, obj)=>{
+    const locations = tableData.reduce((acc:any[], obj:any)=>{
       var exist = acc.find(({latitude, longitude}) => obj.latitude == latitude && obj.longitude == longitude );
       if(!exist){
        acc.push(obj);
@@ -58,12 +58,12 @@ export default function GraphComponent() {
       return acc;
     },[]);
 
-    const latLong = locations.map(obj => {
+    const latLong:any = locations.map((obj:any) => {
       return obj.latitude + ',' + obj.longitude;
     })
 
-    const uniqueAssets = assetsArray.filter((value, index, array) => array.indexOf(value) === index);
-    const uniqueBusinessCategory = businessCatArray.filter((value, index, array) => array.indexOf(value) === index);
+    const uniqueAssets:any = assetsArray.filter((value, index, array) => array.indexOf(value) === index);
+    const uniqueBusinessCategory:any = businessCatArray.filter((value, index, array) => array.indexOf(value) === index);
 
     setAssets(uniqueAssets);
     setBusinessCategory(uniqueBusinessCategory);
@@ -101,7 +101,7 @@ export default function GraphComponent() {
   useEffect(() => {
     const latitude = selectedLocation?.split(',')[0];
     const longitude = selectedLocation?.split(',')[1];
-    const filterData = tableData.filter(obj => {
+    const filterData = tableData.filter((obj:any) => {
       return obj.assetName == selectedAsset && obj.businessCat == selectedBusiness &&
               obj.latitude == latitude && obj.longitude == longitude
     })
@@ -119,7 +119,7 @@ export default function GraphComponent() {
         title: {
           text: 'Year',
         },
-        categories: filterData.map(obj => obj.year),
+        categories: filterData.map((obj:any) => obj.year),
       },
       tooltip: {
         formatter: function() {
@@ -127,7 +127,7 @@ export default function GraphComponent() {
         }
       },
       series: [
-        { data: filterData.map(obj => obj.riskRating) }
+        { data: filterData.map((obj:any) => obj.riskRating) }
       ],
     })
 

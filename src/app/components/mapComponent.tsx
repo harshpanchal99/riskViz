@@ -7,7 +7,7 @@ import { Popup } from 'mapbox-gl';
 mapboxgl.accessToken = 'pk.eyJ1IjoiYzA4MjgwMDgiLCJhIjoiY2xnd2ZmbDE4MGN0azN1cHNvOGlmOGFvZiJ9.y4NQm4T8PaRmv-JtEyM3cQ';
 
 export default function MapComponent(setCoordinates: any, setTableData: any){
-  const mapContainer = useRef(null);
+  const mapContainer = useRef();
   const [riskData, setRiskData] = useState([]);
   const [years, setYears] = useState([]);
 
@@ -54,7 +54,7 @@ export default function MapComponent(setCoordinates: any, setTableData: any){
     map.current.addControl(new mapboxgl.NavigationControl());
   });
 
-  map.current?.on('click', (e) => {
+  map.current?.on('click', () => {
     setCoordinates(null);
   })
 
@@ -102,11 +102,11 @@ export default function MapComponent(setCoordinates: any, setTableData: any){
    */
   useEffect(() => {
     getAll().then((data) => {
-      const jsonObject = data.map((obj) => {
+      const jsonObject = data.map((obj: any) => {
         return obj.year;
       })
     
-      const uniqueYears = jsonObject.filter((value, index, array) => array.indexOf(value) === index);
+      const uniqueYears = jsonObject.filter((value: any, index: any, array: any) => array.indexOf(value) === index);
       setYears(uniqueYears)
     });  
   }, [years.length])
@@ -128,7 +128,7 @@ export default function MapComponent(setCoordinates: any, setTableData: any){
   /**
    * To handle year onchange
    */
-  const handleYearSelect = (e) => {
+  const handleYearSelect = (e: any) => {
     const year = e.target.value;
     setSelectedYear(year);
 
@@ -146,7 +146,7 @@ export default function MapComponent(setCoordinates: any, setTableData: any){
   return (
     <div>
       <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet"/>    
-      <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+      <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js" async></script>
       <div className="text-center">
         <p style={{fontSize: '20px'}}>Map Stimulation of Climate Data</p>
       </div>

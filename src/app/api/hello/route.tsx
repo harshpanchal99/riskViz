@@ -9,7 +9,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const first_worksheet = dt.Sheets[dt.SheetNames[0]];
   const data = XLSX.utils.sheet_to_json(first_worksheet, { header: 1 });
   data.shift();
-  const jsonObject = data.map((obj) => {
+  const jsonObject = data.map((obj: any) => {
     const digit = Math.random(); 
     return {
       assetName: obj[0],
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const first_worksheet = dt.Sheets[dt.SheetNames[0]];
   const data = XLSX.utils.sheet_to_json(first_worksheet, { header: 1 });
   data.shift();
-  const jsonObject = data.map((obj) => {
+  const jsonObject = data.map((obj: any) => {
     return {
       assetName: obj[0],
       latitude: obj[1],

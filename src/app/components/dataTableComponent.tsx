@@ -5,14 +5,14 @@ import DataTable from 'react-data-table-component';
 
 export default function DataTableComponent(coordinates:any, tableData:any){
   const [data, setData] = useState(tableData);
-  const [selectedRiskFactor, setSelectedRiskFactor ] = useState(null);
+  const [selectedRiskFactor, setSelectedRiskFactor ] = useState('');
 
   /**
    * To set or update table data when selects/deselects the marker on map
    */
   useEffect(() => {
     if(coordinates !== null) {
-      const selectedMarker = tableData.filter(obj => {
+      const selectedMarker = tableData.filter((obj:any) => {
         return obj.latitude == coordinates.latitude && obj.longitude == coordinates.longitude
       })
 
@@ -30,33 +30,33 @@ export default function DataTableComponent(coordinates:any, tableData:any){
   const columns = [
     {
         name: 'Asset Name',
-        selector: row => row.assetName,
+        selector: (row:any) => row.assetName,
         sortable: true,
     },
     {
         name: 'Latitude',
-        selector: row => row.latitude,
+        selector: (row:any) => row.latitude,
         sortable: true,
     },
     {
       name: 'Longitude',
-      selector: row => row.longitude,
+      selector: (row:any) => row.longitude,
       sortable: true,
     },
     {
       name: 'Business Category',
-      selector: row => row.businessCat,
+      selector: (row:any) => row.businessCat,
       sortable: true,
     },
     {
       name: 'Risk Rating',
-      selector: row => row.riskRating,
+      selector: (row:any) => row.riskRating,
       sortable: true,
     },
     {
       name: 'Risk Factor',
       width: '75rem',
-      selector: row => row.riskFactor,
+      selector: (row:any) => row.riskFactor,
       sortable: true,
     },
   ];
@@ -64,10 +64,10 @@ export default function DataTableComponent(coordinates:any, tableData:any){
   /**
    * To handle risk factor onChange
    */
-  const handleRiskFactorSelect = (e) => {
+  const handleRiskFactorSelect = (e: any) => {
     const riskFactor = e.target.value;
     setSelectedRiskFactor(riskFactor);
-    const filteredData = tableData.filter(obj => {
+    const filteredData = tableData.filter((obj: any) => {
       return obj.riskFactor.includes(riskFactor);
     })
     setData(filteredData);
