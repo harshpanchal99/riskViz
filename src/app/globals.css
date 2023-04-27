@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.map-container {
+  height: 500px;
+  width: 1000px;
+  overflow: hidden;
+}
+
+.sub-component {
+  border: 1px solid black;
+}
+
+select {
+  background-color: cadetblue;
+}
